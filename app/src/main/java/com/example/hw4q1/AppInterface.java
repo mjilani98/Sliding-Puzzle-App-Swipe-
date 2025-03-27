@@ -22,8 +22,7 @@ public class AppInterface extends RelativeLayout
     //grid for the initial board
     private GridLayout initialGrid;
 
-
-
+    private int boardWidth;
 
 
     //constructor
@@ -69,8 +68,8 @@ public class AppInterface extends RelativeLayout
                 initialBoard[x][y].setTextSize(TypedValue.COMPLEX_UNIT_SP,35 );
                 initialBoard[x][y].setTextColor(Color.parseColor("#FF000000"));
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams( );
-                params.width = 150*DP;
-                params.height  = 150*DP;
+                params.width = 130*DP;
+                params.height  = 130*DP;
                 params.rowSpec = GridLayout.spec(x, 1);
                 params.columnSpec = GridLayout.spec(y, 1);
                 params.topMargin = params.bottomMargin = 1;
@@ -81,12 +80,15 @@ public class AppInterface extends RelativeLayout
                 initialBoard[x][y].setLayoutParams(params);
                 initialGrid.addView(initialBoard[x][y]);
 
-
             }
         }
 
-        addView(initialGrid);
+
+
+
+
         //end initial board
+        addView(initialGrid);
 
         //setting the background screen color
         setBackgroundColor(Color.parseColor("#DDDDDD"));

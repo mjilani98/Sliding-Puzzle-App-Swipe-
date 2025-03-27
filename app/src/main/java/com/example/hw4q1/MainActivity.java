@@ -1,8 +1,10 @@
 package com.example.hw4q1;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +22,15 @@ public class MainActivity extends AppCompatActivity {
 
     //Initialize gesture detector
     private GestureDetector gestureDetector;
+
+    // the board coordinates on the screen , (manually calculated)
+    private int startBoardX = 150;
+    private int endBoardX = 930;
+    //
+    private int startBoardY = 400;
+    private int endBoardY = 1185;
+
+
 
 
     @Override
@@ -54,9 +65,28 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //method returns screen height
+    public int screenHeight()
+    {
+        int screenHeight = getWindowManager().getCurrentWindowMetrics().getBounds().height();
+
+        return screenHeight;
+    }
+
+    //method returns screen width
+    public int screenWidth()
+    {
+        int screenWidth = getWindowManager().getCurrentWindowMetrics().getBounds().width();
+
+        return screenWidth;
+    }
+
     //class that handles the swipes events
     private class SwipeDetecotr extends GestureDetector.SimpleOnGestureListener
     {
+        //row and columns
+        private int startRow , endRow, startColumn, endColumn;
+
         public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY)
         {
             //get x , y coordinates of where swipe started
@@ -67,13 +97,98 @@ public class MainActivity extends AppCompatActivity {
             float endX = event2.getX();
             float endY = event2.getY();
 
-            System.out.println("X started at  : " +(int)startX);
-            System.out.println("X ended at : " +(int)endX);
+            //check if the event is inside the board
+            if(inSideEvent((int)startX,(int)startY,(int)endX,(int)endY))
+            {
+                //get the start row
+                startRow = getRow(event1);
 
-            System.out.println("Y started at  : " + (int)startY);
-            System.out.println("Y ended at : " +(int)endY);
+                //get the end row
+                endRow = getRow(event2);
+
+                //get the start column
+                startColumn = getColumn(event1);
+
+                //get the end column
+                endColumn = getColumn(event2);
+
+                System.out.println("\nstart row : "+ startRow);
+                System.out.println("end row : "+ endRow);
+
+                System.out.println("\nstart column : "+ startColumn);
+                System.out.println("end column : "+ endColumn);
+
+                System.out.println("\nthe start x : " + (int)startX);
+                System.out.println("the end x : " + (int)endX);
+
+                System.out.println("the start y: " + (int)startY);
+                System.out.println("the end y : " + (int)endY);
+            }
+
+
+
+
+
+
 
             return true;
         }
+
+        //method that checks if the event happened inside the range of the board;
+        private boolean inSideEvent(int startx , int starty , int endx , int endy)
+        {
+            //if the event coordinates is withing the board coordinates , return true
+            if( ( startx>= startBoardX && endx <= endBoardX) && (starty>=startBoardY && endy<=endBoardY) )
+            {
+                if(!(starty > endBoardY))
+                    return true;
+                else
+                    return false;
+
+            }
+
+            return false;
+        }
+
+        //method that returns the start row and end row
+        private int getRow(MotionEvent event)
+        {
+            int row = 0;
+
+            if(event.getY() <= 655) // even is within row 1 range
+                row = 1;
+            else if (event.getY() <= 925) // even is within row 2 range
+            {
+                row = 2;
+            }
+            else if(event.getY() <= 1185) // even is within row 3 range
+            {
+                row = 3;
+            }
+
+            return row;
+        }
+
+        //method that return the start column and end column
+        private int getColumn(MotionEvent event)
+        {
+            int column =0;
+
+            if(event.getX() <= 405)
+                column = 1;
+            else if(event.getX() <= 670)
+            {
+                column =2;
+            }
+            else if(event.getX() <= 930)
+            {
+                column = 3;
+            }
+
+            return column;
+        }
+
+
+
     }
 }
