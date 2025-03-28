@@ -112,23 +112,13 @@ public class MainActivity extends AppCompatActivity {
                 //get the end column
                 endColumn = getColumn(event2);
 
-                System.out.println("\nstart row : "+ startRow);
-                System.out.println("end row : "+ endRow);
+                //swap
+                game.swap(startRow,endRow,startColumn,endColumn);
 
-                System.out.println("\nstart column : "+ startColumn);
-                System.out.println("end column : "+ endColumn);
+                //display current board
+                appInterface.drawCurrentBoard(game.getCurrentBoard());
 
-                System.out.println("\nthe start x : " + (int)startX);
-                System.out.println("the end x : " + (int)endX);
-
-                System.out.println("the start y: " + (int)startY);
-                System.out.println("the end y : " + (int)endY);
             }
-
-
-
-
-
 
 
             return true;
@@ -137,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         //method that checks if the event happened inside the range of the board;
         private boolean inSideEvent(int startx , int starty , int endx , int endy)
         {
-            //if the event coordinates is withing the board coordinates , return true
+            //if the event coordinates is withing the board coordimjinates , return true
             if( ( startx>= startBoardX && endx <= endBoardX) && (starty>=startBoardY && endy<=endBoardY) )
             {
                 if(!(starty > endBoardY))
@@ -155,13 +145,13 @@ public class MainActivity extends AppCompatActivity {
         {
             int row = 0;
 
-            if(event.getY() <= 655) // even is within row 1 range
+            if(event.getY() <= 655) // event is within row 1 range
                 row = 1;
-            else if (event.getY() <= 925) // even is within row 2 range
+            else if (event.getY() <= 925) // event is within row 2 range
             {
                 row = 2;
             }
-            else if(event.getY() <= 1185) // even is within row 3 range
+            else if(event.getY() <= 1185) // event is within row 3 range
             {
                 row = 3;
             }
@@ -174,13 +164,13 @@ public class MainActivity extends AppCompatActivity {
         {
             int column =0;
 
-            if(event.getX() <= 405)
+            if(event.getX() <= 405)  // event is within column 1 range
                 column = 1;
-            else if(event.getX() <= 670)
+            else if(event.getX() <= 670) // event is within column 2 range
             {
                 column =2;
             }
-            else if(event.getX() <= 930)
+            else if(event.getX() <= 930) // event is within column 3 range
             {
                 column = 3;
             }
