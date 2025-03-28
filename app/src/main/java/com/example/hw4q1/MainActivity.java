@@ -84,11 +84,17 @@ public class MainActivity extends AppCompatActivity {
     //class that handles the swipes events
     private class SwipeDetecotr extends GestureDetector.SimpleOnGestureListener
     {
+
+
         //row and columns
         private int startRow , endRow, startColumn, endColumn;
 
         public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY)
         {
+            //check if the game is completed before enabling the fling
+            if(game.checkCompleted())
+                return false;
+
             //get x , y coordinates of where swipe started
             float startX = event1.getX();
             float startY = event1.getY();
@@ -117,6 +123,13 @@ public class MainActivity extends AppCompatActivity {
 
                 //display current board
                 appInterface.drawCurrentBoard(game.getCurrentBoard());
+
+                //check if the board is completed
+                if(game.checkCompleted())
+                {
+                    //turn the board to red
+                    appInterface.endBoard(game.getCurrentBoard());
+                }
 
             }
 

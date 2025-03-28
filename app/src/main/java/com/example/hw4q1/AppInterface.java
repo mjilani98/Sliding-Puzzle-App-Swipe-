@@ -109,5 +109,18 @@ public class AppInterface extends RelativeLayout
         }
     }
 
+    //method that turns all the blocks to the red color , only if the board is completed
+    public void endBoard(char[][] currentBoard)
+    {
+        for(int x = 0 ;  x < BOARD_SIZE ; x++)
+        {
+            for (int y = 0; y < BOARD_SIZE; y++)
+            {
+                initialBoard[x][y].setText(""+currentBoard[x][y]);
+                initialBoard[x][y].setBackgroundColor(Color.parseColor("#FF0000"));
+            }
+        }
+    }
+
 
 }
